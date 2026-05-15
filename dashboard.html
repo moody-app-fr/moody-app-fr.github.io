@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moody — Dashboard</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+    :root {
+      --primary: #8B5CF6;
+      --secondary: #EC4899;
+      --accent: #F97316;
+      --bg: #0A0612;
+      --bg2: #110D1E;
+      --bg3: #1A1430;
+      --card: #1E1832;
+      --border: rgba(139,92,246,0.15);
+      --text: #F0EBF8;
+      --muted: #7B6FA0;
+      --success: #10B981;
+      --warning: #F59E0B;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* LOGIN */
+    #login-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 24px;
+    }
+
+    #login-screen h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    #login-screen input {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 20px;
+      color: var(--text);
+      font-size: 1rem;
+      width: 320px;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    #login-screen input:focus { border-color: var(--primary); }
+
+    #login-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none;
+      border-radius: 12px;
+      padding: 14px 40px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Syne', sans-serif;
+      transition: opacity 0.2s;
+    }
+
+    #login-btn:hover { opacity: 0.85; }
+    #login-error { color: #F87171; font-size: 0.9rem; }
+
+    /* DASHBOARD */
+    #dashboard { display: none; }
+
+    header {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 16px; }
+
+    .logo-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .badge {
+      background: rgba(139,92,246,0.2);
+      color: var(--primary);
+      border: 1px solid rgba(139,92,246,0.3);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    #refresh-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 20px;
+      color: var(--text);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    #refresh-btn:hover { background: var(--bg3); }
+
+    main { padding: 32px 40px; max-width: 1400px; margin: 0 auto; }
+
+    /* OHLALA BANNER */
+    .ohlala-banner {
+      background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(236,72,153,0.15));
+      border: 1px solid rgba(139,92,246,0.3);
+      border-radius: 16px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .ohlala-moon { font-size: 2rem; }
+
+    .ohlala-text { flex: 1; }
+    .ohlala-text h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--primary); }
+    .ohlala-text p { font-size: 0.9rem; color: var(--muted); margin-top: 2px; }
+    .ohlala-time { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--text); }
+
+    /* SECTION TITLES */
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin: 40px 0 16px;
+    }
+
+    /* GRID */
+    .grid { display: grid; gap: 16px; }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-1 { grid-template-columns: 1fr; }
+
+    /* STAT CARD */
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .stat-card:hover { border-color: rgba(139,92,246,0.4); }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .stat-card:hover::before { opacity: 1; }
+
+    .stat-icon { font-size: 1.5rem; margin-bottom: 12px; }
+    .stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 6px; }
+
+    .stat-sub {
+      font-size: 0.8rem;
+      color: var(--success);
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* CHART CARD */
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .chart-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chart-wrap { position: relative; height: 220px; }
+
+    /* TABLE */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 12px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(139,92,246,0.07);
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* BAR */
+    .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .bar-label { width: 80px; font-size: 0.85rem; color: var(--muted); text-align: right; }
+    .bar-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.8s ease; }
+    .bar-val { width: 40px; font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+    /* PROGRESS */
+    .progress-ring { font-size: 0.9rem; color: var(--muted); }
+
+    /* PILL */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16,185,129,0.1);
+      color: var(--success);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .pill.warn { background: rgba(245,158,11,0.1); color: var(--warning); }
+    .pill.primary { background: rgba(139,92,246,0.1); color: var(--primary); }
+
+    /* LOADER */
+    #loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 1100px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) {
+      main { padding: 20px; }
+      header { padding: 16px 20px; }
+      .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div style="font-size:3rem">🌙</div>
+  <h1>Moody Dashboard</h1>
+  <input type="password" id="token-input" placeholder="Token admin" />
+  <button id="login-btn" onclick="login()">Accéder</button>
+  <p id="login-error"></p>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <header>
+    <div class="header-left">
+      <span class="logo-text">Moody</span>
+      <span class="badge">Dashboard Admin</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span id="last-update" style="font-size:0.8rem;color:var(--muted)"></span>
+      <button id="refresh-btn" onclick="loadData()">↻ Actualiser</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="loader"><div class="spinner"></div><span style="color:var(--muted)">Chargement...</span></div>
+    <div id="content" style="display:none">
+
+      <!-- OHLALA -->
+      <div class="ohlala-banner">
+        <div class="ohlala-moon">🌙</div>
+        <div class="ohlala-text">
+          <h3>Notification Ohlala du jour</h3>
+          <p id="ohlala-date">—</p>
+        </div>
+        <div class="ohlala-time" id="ohlala-time">—</div>
+      </div>
+
+      <!-- UTILISATEURS -->
+      <div class="section-title">👥 Utilisateurs</div>
+      <div class="grid grid-4">
+        <div class="stat-card">
+          <div class="stat-icon">👤</div>
+          <div class="stat-value" id="total-users">—</div>
+          <div class="stat-label">Total inscrits</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🟢</div>
+          <div class="stat-value" id="active-today">—</div>
+          <div class="stat-label">Actifs aujourd'hui</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-value" id="active-7d">—</div>
+          <div class="stat-label">Actifs 7 derniers jours</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎂</div>
+          <div class="stat-value" id="avg-age">—</div>
+          <div class="stat-label">Âge moyen</div>
+          <div class="stat-sub" id="retention-rate"></div>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:16px">
+        <div class="chart-card">
+          <div class="chart-title">📈 Inscriptions (30 derniers jours)</div>
+          <div class="chart-wrap"><canvas id="registrations-chart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">🌍 Pays de résidence</div>
+          <div id="countries-list"></div>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:16px">
+        <div class="chart-card">
+          <div class="chart-title">📊 Distribution par âge</div>
+          <div class="chart-wrap"><canvas id="age-chart"></canvas></div>
+        </div>
+        <div class="stat-card" style="display:flex;flex-direction:column;justify-content:center;gap:16px">
+          <div>
+            <div class="stat-icon">🔄</div>
+            <div class="stat-value" id="retention">—%</div>
+            <div class="stat-label">Rétention J+7</div>
+          </div>
+          <div>
+            <div class="stat-icon">🎯</div>
+            <div class="stat-value" id="conversion">—%</div>
+            <div class="stat-label">Taux conversion → 1er mood</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOODS -->
+      <div class="section-title">💜 Moods & Engagement</div>
+      <div class="grid grid-4">
+        <div class="stat-card">
+          <div class="stat-icon">💜</div>
+          <div class="stat-value" id="total-moods">—</div>
+          <div class="stat-label">Moods total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📆</div>
+          <div class="stat-value" id="moods-today">—</div>
+          <div class="stat-label">Moods aujourd'hui</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💬</div>
+          <div class="stat-value" id="total-reactions">—</div>
+          <div class="stat-label">Réactions total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📞</div>
+          <div class="stat-value" id="total-calls">—</div>
+          <div class="stat-label">Appels passés</div>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:16px">
+        <div class="chart-card">
+          <div class="chart-title">📈 Moods par jour (30 derniers jours)</div>
+          <div class="chart-wrap"><canvas id="moods-chart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">🕐 Heure de pointe d'activité</div>
+          <div class="chart-wrap"><canvas id="hours-chart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:16px">
+        <div class="chart-card">
+          <div class="chart-title">🏆 Top moods</div>
+          <div id="top-moods-list"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">💬 Réactions par type</div>
+          <div id="reactions-list"></div>
+        </div>
+      </div>
+
+      <!-- STREAKS & BADGES -->
+      <div class="section-title">🌙 Streaks & Badges</div>
+      <div class="grid grid-3">
+        <div class="stat-card">
+          <div class="stat-icon">🌙</div>
+          <div class="stat-value" id="avg-streak">—</div>
+          <div class="stat-label">Streak moyen (jours)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-value" id="moody-lovers">—</div>
+          <div class="stat-label">Moody Lovers (30j+)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📍</div>
+          <div class="stat-value" id="moods-location">—</div>
+          <div class="stat-label">Moods géolocalisés</div>
+        </div>
+      </div>
+
+      <!-- NOTIFICATIONS -->
+      <div class="section-title">🔔 Notifications</div>
+      <div class="grid grid-2">
+        <div class="stat-card">
+          <div class="stat-icon">📱</div>
+          <div class="stat-value" id="push-users">—</div>
+          <div class="stat-label">Utilisateurs avec token push</div>
+          <div class="stat-sub" id="push-percent"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">🔔 Couverture push</div>
+          <div class="chart-wrap"><canvas id="push-chart"></canvas></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+const API = 'https://moody-backend.osc-fr1.scalingo.io/api';
+let adminToken = '';
+let charts = {};
+
+function login() {
+  adminToken = document.getElementById('token-input').value.trim();
+  if (!adminToken) return;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadData();
+}
+
+document.getElementById('token-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') login();
+});
+
+async function loadData() {
+  document.getElementById('loader').style.display = 'flex';
+  document.getElementById('content').style.display = 'none';
+
+  try {
+    const res = await fetch(`${API}/admin/dashboard`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+
+    if (res.status === 401) {
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('login-error').textContent = 'Token invalide';
+      return;
+    }
+
+    const json = await res.json();
+    const d = json.data;
+
+    document.getElementById('last-update').textContent =
+      'Mis à jour : ' + new Date().toLocaleTimeString('fr-FR');
+
+    renderOhlala(d.notifications.ohlalaSchedule);
+    renderUsers(d.users);
+    renderMoods(d.moods);
+    renderReactions(d.reactions);
+    renderEngagement(d.engagement, d.moods);
+    renderNotifications(d.notifications);
+    renderCharts(d);
+
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+
+  } catch (e) {
+    alert('Erreur : ' + e.message);
+  }
+}
+
+function renderOhlala(schedule) {
+  if (!schedule) {
+    document.getElementById('ohlala-time').textContent = 'Non planifiée';
+    document.getElementById('ohlala-date').textContent = 'Aucune donnée';
+    return;
+  }
+  document.getElementById('ohlala-time').textContent = schedule.time;
+  document.getElementById('ohlala-date').textContent =
+    'Aujourd\'hui ' + new Date(schedule.date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
+function renderUsers(u) {
+  document.getElementById('total-users').textContent = u.total;
+  document.getElementById('active-today').textContent = u.activeToday;
+  document.getElementById('active-7d').textContent = u.activeLast7Days;
+  document.getElementById('avg-age').textContent = u.averageAge + ' ans';
+  document.getElementById('retention').textContent = u.retentionAt7Days + '%';
+  document.getElementById('conversion').textContent = u.conversionRate + '%';
+
+  // Pays
+  const countriesEl = document.getElementById('countries-list');
+  const sorted = Object.entries(u.countryCounts).sort((a, b) => b[1] - a[1]);
+  const total = sorted.reduce((s, [, v]) => s + v, 0);
+  countriesEl.innerHTML = sorted.slice(0, 8).map(([country, count]) => `
+    <div class="bar-row">
+      <div class="bar-label">${country}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${total > 0 ? (count/total*100) : 0}%"></div></div>
+      <div class="bar-val">${count}</div>
+    </div>
+  `).join('');
+}
+
+function renderMoods(m) {
+  document.getElementById('total-moods').textContent = m.total;
+  document.getElementById('moods-today').textContent = m.today;
+  document.getElementById('total-calls').textContent = m.totalCalls;
+  document.getElementById('moods-location').textContent = m.withLocation;
+
+  // Top moods
+  const topEl = document.getElementById('top-moods-list');
+  topEl.innerHTML = m.topTypes.slice(0, 5).map((t, i) => `
+    <div class="bar-row">
+      <div class="bar-label" style="width:120px;font-size:0.8rem">${t.type}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${m.total > 0 ? (t.count/m.total*100) : 0}%"></div></div>
+      <div class="bar-val">${t.count}</div>
+    </div>
+  `).join('');
+}
+
+function renderReactions(r) {
+  document.getElementById('total-reactions').textContent = r.total;
+
+  const reactionIcons = { emoji: '😍', text: '💬', voice: '🎤' };
+  const el = document.getElementById('reactions-list');
+  el.innerHTML = r.byType.map(t => `
+    <div class="bar-row">
+      <div class="bar-label">${reactionIcons[t.type] || t.type}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${r.total > 0 ? (t.count/r.total*100) : 0}%"></div></div>
+      <div class="bar-val">${t.count}</div>
+    </div>
+  `).join('');
+}
+
+function renderEngagement(e, m) {
+  document.getElementById('avg-streak').textContent = e.averageStreak;
+  document.getElementById('moody-lovers').textContent =
+    e.moodyLovers + ' (' + e.moodyLoversPercent + '%)';
+}
+
+function renderNotifications(n) {
+  document.getElementById('push-users').textContent = n.usersWithToken;
+  document.getElementById('push-percent').innerHTML =
+    `<span>${n.pushCoveragePercent}% de couverture</span>`;
+}
+
+function renderCharts(d) {
+  // Détruire les anciens charts
+  Object.values(charts).forEach(c => c.destroy());
+  charts = {};
+
+  const primaryColor = '#8B5CF6';
+  const secondaryColor = '#EC4899';
+  const gridColor = 'rgba(139,92,246,0.08)';
+
+  const chartDefaults = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: {
+        grid: { color: gridColor },
+        ticks: { color: '#7B6FA0', font: { size: 11 } }
+      },
+      y: {
+        grid: { color: gridColor },
+        ticks: { color: '#7B6FA0', font: { size: 11 } }
+      }
+    }
+  };
+
+  // Inscriptions
+  const regDays = Array.isArray(d.users.registrationsByDay) ? d.users.registrationsByDay : [];
+  charts.reg = new Chart(document.getElementById('registrations-chart'), {
+    type: 'line',
+    data: {
+      labels: regDays.map(r => new Date(r.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' })),
+      datasets: [{
+        data: regDays.map(r => Number(r.count)),
+        borderColor: primaryColor,
+        backgroundColor: 'rgba(139,92,246,0.1)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 3,
+        pointBackgroundColor: primaryColor,
+      }]
+    },
+    options: chartDefaults
+  });
+
+  // Moods par jour
+  const moodDays = Array.isArray(d.moods.byDay) ? d.moods.byDay : [];
+  charts.moods = new Chart(document.getElementById('moods-chart'), {
+    type: 'bar',
+    data: {
+      labels: moodDays.map(r => new Date(r.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' })),
+      datasets: [{
+        data: moodDays.map(r => Number(r.count)),
+        backgroundColor: 'rgba(236,72,153,0.6)',
+        borderColor: secondaryColor,
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: chartDefaults
+  });
+
+  // Heures de pointe
+  const hours = Array.isArray(d.moods.byHour) ? d.moods.byHour : [];
+  const hourData = Array.from({ length: 24 }, (_, i) => {
+    const found = hours.find(h => Number(h.hour) === i);
+    return found ? Number(found.count) : 0;
+  });
+
+  charts.hours = new Chart(document.getElementById('hours-chart'), {
+    type: 'bar',
+    data: {
+      labels: Array.from({ length: 24 }, (_, i) => i + 'h'),
+      datasets: [{
+        data: hourData,
+        backgroundColor: hourData.map((v, i) => {
+          const max = Math.max(...hourData);
+          return v === max ? 'rgba(249,115,22,0.8)' : 'rgba(139,92,246,0.4)';
+        }),
+        borderRadius: 4,
+      }]
+    },
+    options: { ...chartDefaults, scales: { ...chartDefaults.scales, x: { ...chartDefaults.scales.x, ticks: { ...chartDefaults.scales.x.ticks, maxRotation: 0 } } } }
+  });
+
+  // Distribution par âge
+  const ageGroups = d.users.ageGroups || {};
+  charts.age = new Chart(document.getElementById('age-chart'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(ageGroups),
+      datasets: [{
+        data: Object.values(ageGroups),
+        backgroundColor: ['#8B5CF6','#EC4899','#F97316','#10B981','#F59E0B','#3B82F6'],
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'right',
+          labels: { color: '#7B6FA0', font: { size: 11 }, boxWidth: 12 }
+        }
+      }
+    }
+  });
+
+  // Push coverage
+  const withToken = d.notifications.usersWithToken;
+  const total = d.users.total;
+  charts.push = new Chart(document.getElementById('push-chart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Avec token', 'Sans token'],
+      datasets: [{
+        data: [withToken, Math.max(0, total - withToken)],
+        backgroundColor: ['#8B5CF6', '#1E1832'],
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'right',
+          labels: { color: '#7B6FA0', font: { size: 11 }, boxWidth: 12 }
+        }
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
