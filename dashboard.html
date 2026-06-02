@@ -398,6 +398,17 @@
 
       <div class="grid grid-2" style="margin-top:16px">
         <div class="chart-card">
+          <div class="chart-title">🚀 Évolution cumulée des inscrits</div>
+          <div class="chart-wrap"><canvas id="cumulative-chart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">👥 Gestion des utilisateurs</div>
+          <div id="users-admin-list" style="max-height:220px;overflow-y:auto"></div>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:16px">
+        <div class="chart-card">
           <div class="chart-title">📊 Distribution par âge</div>
           <div class="chart-wrap"><canvas id="age-chart"></canvas></div>
         </div>
@@ -547,6 +558,7 @@ async function loadData() {
     renderEngagement(d.engagement, d.moods);
     renderNotifications(d.notifications);
     renderCharts(d);
+    loadUsersAdmin();
 
     document.getElementById('loader').style.display = 'none';
     document.getElementById('content').style.display = 'block';
@@ -631,6 +643,61 @@ function renderNotifications(n) {
     `<span>${n.pushCoveragePercent}% de couverture</span>`;
 }
 
+async function loadUsersAdmin() {
+  const container = document.getElementById('users-admin-list');
+  if (!container) return;
+  container.innerHTML = '<div style="color:#7B6FA0;font-size:13px;padding:8px">Chargement…</div>';
+  try {
+    const res = await fetch(`${API}/admin/users`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const json = await res.json();
+    const users = json.data?.users || [];
+
+    if (users.length === 0) {
+      container.innerHTML = '<div style="color:#7B6FA0;font-size:13px;padding:8px">Aucun utilisateur</div>';
+      return;
+    }
+
+    container.innerHTML = users.map(u => {
+      const initials = ((u.firstName || '?')[0] + (u.lastName || '')[0] || '').toUpperCase();
+      const safeName = (u.firstName + ' ' + u.lastName).replace(/'/g, "\\'");
+      return `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;border-bottom:1px solid rgba(139,92,246,0.08)">
+        <div style="display:flex;flex-direction:column">
+          <span style="color:#E8E0F5;font-size:13px;font-weight:600">${u.firstName} ${u.lastName}</span>
+          <span style="color:#7B6FA0;font-size:11px">${u.email} · ${u.moodCount} moods</span>
+        </div>
+        <button onclick="deleteUserAdmin('${u.id}', '${safeName}')"
+          style="background:rgba(239,68,68,0.15);color:#EF4444;border:none;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer">
+          🗑️
+        </button>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:#EF4444;font-size:13px;padding:8px">Erreur de chargement</div>';
+  }
+}
+
+async function deleteUserAdmin(userId, name) {
+  if (!confirm(`Supprimer ${name} et TOUT son historique ?\n\nCette action est irréversible.`)) return;
+  try {
+    const res = await fetch(`${API}/admin/users/${userId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const json = await res.json();
+    if (json.success) {
+      alert(json.message);
+      loadData(); // recharge tout (stats + graphiques + liste)
+    } else {
+      alert('Erreur : ' + (json.message || 'inconnue'));
+    }
+  } catch (e) {
+    alert('Erreur : ' + e.message);
+  }
+}
+
 function renderCharts(d) {
   // Détruire les anciens charts
   Object.values(charts).forEach(c => c.destroy());
@@ -675,7 +742,31 @@ function renderCharts(d) {
     options: chartDefaults
   });
 
-  // Moods par jour
+  // Évolution cumulée des inscrits (part du total réel, pas de zéro)
+  const totalUsers = Number(d.users.total) || 0;
+  const sumWindow = regDays.reduce((acc, r) => acc + Number(r.count), 0);
+  let runningTotal = totalUsers - sumWindow; // niveau avant la fenêtre de 30 jours
+  const cumulativeData = regDays.map(r => {
+    runningTotal += Number(r.count);
+    return runningTotal;
+  });
+  charts.cumulative = new Chart(document.getElementById('cumulative-chart'), {
+    type: 'line',
+    data: {
+      labels: regDays.map(r => new Date(r.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' })),
+      datasets: [{
+        data: cumulativeData,
+        borderColor: secondaryColor,
+        backgroundColor: 'rgba(236,72,153,0.12)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 2,
+        pointBackgroundColor: secondaryColor,
+        stepped: false,
+      }]
+    },
+    options: chartDefaults
+  });
   const moodDays = Array.isArray(d.moods.byDay) ? d.moods.byDay : [];
   charts.moods = new Chart(document.getElementById('moods-chart'), {
     type: 'bar',
