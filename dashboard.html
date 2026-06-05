@@ -407,6 +407,11 @@
         </div>
       </div>
 
+      <div class="chart-card" style="margin-top:16px">
+        <div class="chart-title">🚩 Signalements à traiter</div>
+        <div id="reports-admin-list" style="max-height:320px;overflow-y:auto"></div>
+      </div>
+
       <div class="grid grid-2" style="margin-top:16px">
         <div class="chart-card">
           <div class="chart-title">📊 Distribution par âge</div>
@@ -559,6 +564,7 @@ async function loadData() {
     renderNotifications(d.notifications);
     renderCharts(d);
     loadUsersAdmin();
+    loadReportsAdmin();
 
     document.getElementById('loader').style.display = 'none';
     document.getElementById('content').style.display = 'block';
@@ -641,6 +647,81 @@ function renderNotifications(n) {
   document.getElementById('push-users').textContent = n.usersWithToken;
   document.getElementById('push-percent').innerHTML =
     `<span>${n.pushCoveragePercent}% de couverture</span>`;
+}
+
+async function loadReportsAdmin() {
+  const container = document.getElementById('reports-admin-list');
+  if (!container) return;
+  container.innerHTML = '<div style="color:#7B6FA0;font-size:13px;padding:8px">Chargement…</div>';
+
+  const reasonLabels = {
+    inapproprie: '🔞 Contenu inapproprié',
+    harcelement: '😡 Harcèlement',
+    spam: '📧 Spam',
+    violence: '⚠️ Violence',
+    autre: '❓ Autre'
+  };
+
+  try {
+    const res = await fetch(`${API}/admin/reports`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const json = await res.json();
+    const reports = json.data?.reports || [];
+
+    if (reports.length === 0) {
+      container.innerHTML = '<div style="color:#7B6FA0;font-size:13px;padding:8px">Aucun signalement en attente ✅</div>';
+      return;
+    }
+
+    container.innerHTML = reports.map(r => {
+      const date = new Date(r.createdAt).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+      const moodInfo = r.mood ? `${r.mood.moodType}${r.mood.customText ? ' — "' + r.mood.customText + '"' : ''}` : '(mood expiré/supprimé)';
+      const reportedName = r.reportedUser ? r.reportedUser.name : 'Inconnu';
+      const reportedId = r.reportedUser ? r.reportedUser.id : '';
+      const reportedSafe = reportedName.replace(/'/g, "\\'");
+      return `
+      <div style="padding:12px;border-bottom:1px solid rgba(139,92,246,0.08)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="color:#E8E0F5;font-size:13px;font-weight:700">${reasonLabels[r.reason] || r.reason}</span>
+          <span style="color:#7B6FA0;font-size:11px">${date}</span>
+        </div>
+        <div style="color:#B8A8D0;font-size:12px;margin-bottom:4px">
+          Auteur signalé : <strong>${reportedName}</strong> · Signalé par : ${r.reporter}
+        </div>
+        <div style="color:#7B6FA0;font-size:12px;margin-bottom:4px">Mood : ${moodInfo}</div>
+        ${r.details ? `<div style="color:#9888B8;font-size:12px;font-style:italic;margin-bottom:8px">« ${r.details} »</div>` : ''}
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button onclick="resolveReportAdmin('${r.id}','resolved')"
+            style="background:rgba(34,197,94,0.15);color:#22C55E;border:none;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer">✓ Traité</button>
+          <button onclick="resolveReportAdmin('${r.id}','dismissed')"
+            style="background:rgba(123,111,160,0.15);color:#9888B8;border:none;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer">Ignorer</button>
+          ${reportedId ? `<button onclick="deleteUserAdmin('${reportedId}','${reportedSafe}')"
+            style="background:rgba(239,68,68,0.15);color:#EF4444;border:none;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer">🗑️ Supprimer l'auteur</button>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:#EF4444;font-size:13px;padding:8px">Erreur de chargement</div>';
+  }
+}
+
+async function resolveReportAdmin(reportId, action) {
+  try {
+    const res = await fetch(`${API}/admin/reports/${reportId}/resolve`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${adminToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action })
+    });
+    const json = await res.json();
+    if (json.success) {
+      loadReportsAdmin();
+    } else {
+      alert('Erreur : ' + (json.message || 'inconnue'));
+    }
+  } catch (e) {
+    alert('Erreur : ' + e.message);
+  }
 }
 
 async function loadUsersAdmin() {
