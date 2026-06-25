@@ -319,6 +319,28 @@
       header { padding: 16px 20px; }
       .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
     }
+    /* MOODS ÉPHÉMÈRES — formulaire */
+    .em-field {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: var(--text);
+      font-size: 0.9rem;
+      width: 100%;
+      outline: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .em-field:focus { border-color: var(--primary); }
+    .em-label { font-size: 0.72rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; display: block; }
+    .em-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none; border-radius: 10px; padding: 12px;
+      color: white; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      transition: opacity 0.2s;
+    }
+    .em-btn:hover { opacity: 0.88; }
   </style>
 </head>
 <body>
@@ -513,6 +535,67 @@
         </div>
       </div>
 
+      <!-- MOODS ÉPHÉMÈRES -->
+      <div class="section-title">✨ Moods éphémères</div>
+      <div class="grid grid-2">
+
+        <!-- Formulaire de création -->
+        <div class="chart-card">
+          <div class="chart-title">➕ Créer un mood éphémère</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <label class="em-label">Nom</label>
+              <input id="em-name" class="em-field" placeholder="ex : Mojito" />
+            </div>
+            <div>
+              <label class="em-label">Description</label>
+              <input id="em-description" class="em-field" placeholder="ex : Ce soir, c'est cocktail !" />
+            </div>
+            <div>
+              <label class="em-label">Saison</label>
+              <select id="em-season" class="em-field">
+                <option value="spring">🌸 Printemps</option>
+                <option value="summer">☀️ Été</option>
+                <option value="autumn">🍂 Automne</option>
+                <option value="winter">❄️ Hiver</option>
+                <option value="event">🎉 Événement</option>
+              </select>
+            </div>
+            <div style="display:flex;gap:12px">
+              <div style="flex:1">
+                <label class="em-label">Début</label>
+                <input type="date" id="em-start" class="em-field" />
+              </div>
+              <div style="flex:1">
+                <label class="em-label">Fin</label>
+                <input type="date" id="em-end" class="em-field" />
+              </div>
+            </div>
+            <div>
+              <label class="em-label">Illustration (PNG transparent recommandé)</label>
+              <input type="file" id="em-image" class="em-field" accept="image/png,image/jpeg,image/webp" onchange="previewEphemeralImage(event)" style="padding:8px" />
+              <img id="em-preview" style="display:none;margin-top:10px;width:88px;height:88px;border-radius:12px;object-fit:contain;background:rgba(139,92,246,0.08);border:1px solid var(--border)" />
+            </div>
+            <label style="display:flex;align-items:center;gap:8px;color:var(--text);font-size:0.85rem;cursor:pointer">
+              <input type="checkbox" id="em-active" checked /> Actif immédiatement
+            </label>
+            <button class="em-btn" onclick="createEphemeralMoodAdmin()">Créer le mood</button>
+            <div id="em-form-msg" style="font-size:0.82rem;min-height:18px"></div>
+          </div>
+        </div>
+
+        <!-- Liste des moods éphémères -->
+        <div class="chart-card">
+          <div class="chart-title" style="justify-content:space-between">
+            <span>📋 Moods existants</span>
+            <button onclick="launchWaveAdmin()" title="Remet tous les compteurs de déblocage à 0"
+              style="background:rgba(249,115,22,0.15);color:var(--accent);border:none;border-radius:8px;padding:6px 12px;font-size:0.78rem;font-weight:700;cursor:pointer">🌊 Lancer la vague</button>
+          </div>
+          <div id="ephemeral-list" style="max-height:460px;overflow-y:auto"></div>
+        </div>
+
+      </div>
+
     </div>
   </main>
 </div>
@@ -565,6 +648,7 @@ async function loadData() {
     renderCharts(d);
     loadUsersAdmin();
     loadReportsAdmin();
+    loadEphemeralMoods();
 
     document.getElementById('loader').style.display = 'none';
     document.getElementById('content').style.display = 'block';
@@ -774,6 +858,163 @@ async function deleteUserAdmin(userId, name) {
     } else {
       alert('Erreur : ' + (json.message || 'inconnue'));
     }
+  } catch (e) {
+    alert('Erreur : ' + e.message);
+  }
+}
+
+// === MOODS ÉPHÉMÈRES ===
+
+const EM_SEASON_LABELS = {
+  spring: '🌸 Printemps', summer: '☀️ Été', autumn: '🍂 Automne',
+  winter: '❄️ Hiver', event: '🎉 Événement'
+};
+
+function previewEphemeralImage(e) {
+  const file = e.target.files[0];
+  const preview = document.getElementById('em-preview');
+  if (!file) { preview.style.display = 'none'; return; }
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = 'block';
+}
+
+async function loadEphemeralMoods() {
+  const container = document.getElementById('ephemeral-list');
+  if (!container) return;
+  container.innerHTML = '<div style="color:#7B6FA0;font-size:13px;padding:8px">Chargement…</div>';
+  try {
+    const res = await fetch(`${API}/admin/ephemeral-moods`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const json = await res.json();
+    const moods = json.data?.moods || [];
+
+    if (moods.length === 0) {
+      container.innerHTML = '<div style="color:#7B6FA0;font-size:13px;padding:8px">Aucun mood éphémère</div>';
+      return;
+    }
+
+    container.innerHTML = moods.map(m => {
+      const start = new Date(m.startDate).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+      const end = new Date(m.endDate).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+      const nameSafe = m.name.replace(/'/g, "\\'");
+      const opacity = m.isActive ? '1' : '0.5';
+      const thumb = m.imageUrl
+        ? `<img src="${m.imageUrl}" style="width:46px;height:46px;border-radius:10px;object-fit:contain;background:rgba(139,92,246,0.08);flex-shrink:0" />`
+        : `<div title="Aucune illustration" style="width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(239,68,68,0.12);color:#EF4444;font-size:18px;flex-shrink:0">∅</div>`;
+      return `
+      <div style="display:flex;align-items:center;gap:12px;padding:10px;border-bottom:1px solid rgba(139,92,246,0.08);opacity:${opacity}">
+        ${thumb}
+        <div style="flex:1;min-width:0">
+          <div style="color:#E8E0F5;font-size:13px;font-weight:700">${m.name}</div>
+          <div style="color:#7B6FA0;font-size:11px">${EM_SEASON_LABELS[m.season] || m.season} · ${start} → ${end}</div>
+          <div style="color:#9888B8;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.description}</div>
+        </div>
+        <button onclick="toggleEphemeralMoodAdmin('${m.id}')" title="${m.isActive ? 'Désactiver' : 'Activer'}"
+          style="background:${m.isActive ? 'rgba(16,185,129,0.15)' : 'rgba(123,111,160,0.15)'};color:${m.isActive ? '#10B981' : '#9888B8'};border:none;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;flex-shrink:0">
+          ${m.isActive ? '✓ Actif' : '◯ Inactif'}
+        </button>
+        <button onclick="deleteEphemeralMoodAdmin('${m.id}','${nameSafe}')"
+          style="background:rgba(239,68,68,0.15);color:#EF4444;border:none;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;flex-shrink:0">🗑️</button>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:#EF4444;font-size:13px;padding:8px">Erreur de chargement</div>';
+  }
+}
+
+async function createEphemeralMoodAdmin() {
+  const name = document.getElementById('em-name').value.trim();
+  const description = document.getElementById('em-description').value.trim();
+  const season = document.getElementById('em-season').value;
+  const startDate = document.getElementById('em-start').value;
+  const endDate = document.getElementById('em-end').value;
+  const isActive = document.getElementById('em-active').checked;
+  const fileInput = document.getElementById('em-image');
+  const file = fileInput.files[0];
+  const msg = document.getElementById('em-form-msg');
+
+  if (!name || !description || !season || !startDate || !endDate) {
+    msg.style.color = '#EF4444'; msg.textContent = 'Tous les champs sont requis'; return;
+  }
+  if (!file) {
+    msg.style.color = '#EF4444'; msg.textContent = 'Une illustration est requise'; return;
+  }
+
+  const fd = new FormData();
+  fd.append('name', name);
+  fd.append('description', description);
+  fd.append('season', season);
+  fd.append('startDate', startDate);
+  fd.append('endDate', endDate);
+  fd.append('isActive', isActive);
+  fd.append('image', file);
+
+  msg.style.color = '#7B6FA0'; msg.textContent = 'Création en cours…';
+
+  try {
+    // IMPORTANT : pas de Content-Type manuel → le navigateur pose le boundary multipart
+    const res = await fetch(`${API}/admin/ephemeral-moods`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${adminToken}` },
+      body: fd
+    });
+    const json = await res.json();
+    if (json.success) {
+      msg.style.color = '#10B981'; msg.textContent = json.message;
+      document.getElementById('em-name').value = '';
+      document.getElementById('em-description').value = '';
+      document.getElementById('em-start').value = '';
+      document.getElementById('em-end').value = '';
+      fileInput.value = '';
+      document.getElementById('em-preview').style.display = 'none';
+      loadEphemeralMoods();
+    } else {
+      msg.style.color = '#EF4444'; msg.textContent = json.message || 'Erreur';
+    }
+  } catch (e) {
+    msg.style.color = '#EF4444'; msg.textContent = 'Erreur : ' + e.message;
+  }
+}
+
+async function toggleEphemeralMoodAdmin(id) {
+  try {
+    const res = await fetch(`${API}/admin/ephemeral-moods/${id}/toggle`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const json = await res.json();
+    if (json.success) loadEphemeralMoods();
+    else alert('Erreur : ' + (json.message || 'inconnue'));
+  } catch (e) {
+    alert('Erreur : ' + e.message);
+  }
+}
+
+async function deleteEphemeralMoodAdmin(id, name) {
+  if (!confirm(`Supprimer le mood éphémère "${name}" ?\n\nL'illustration sera aussi supprimée de R2. Action irréversible.`)) return;
+  try {
+    const res = await fetch(`${API}/admin/ephemeral-moods/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const json = await res.json();
+    if (json.success) loadEphemeralMoods();
+    else alert('Erreur : ' + (json.message || 'inconnue'));
+  } catch (e) {
+    alert('Erreur : ' + e.message);
+  }
+}
+
+async function launchWaveAdmin() {
+  if (!confirm('🌊 Lancer la vague ?\n\nTous les compteurs de déblocage seront remis à 0. Chaque utilisateur devra de nouveau cumuler des moods pour débloquer les moods éphémères.')) return;
+  try {
+    const res = await fetch(`${API}/admin/ephemeral-moods/launch-wave`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const json = await res.json();
+    alert(json.message || 'Vague lancée');
   } catch (e) {
     alert('Erreur : ' + e.message);
   }
