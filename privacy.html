@@ -100,7 +100,7 @@
     <h2>1. Responsable du traitement</h2>
     <div class="card">
       <p><strong style="color:#fff">Grégory Delaroche-Vernet</strong></p>
-      <p>Email : <a href="mailto:moudie-ceo@proton.me">moudie-ceo@proton.me</a></p>
+      <p>Email : <a href="mailto:contact@moudie.app">contact@moudie.app</a></p>
     </div>
 
     <h2>2. Présentation de l'application</h2>
@@ -143,8 +143,7 @@
     <ul>
       <li>Token de notifications push (pour l'envoi des alertes)</li>
       <li>Paramètres de notification</li>
-      <li>Jeton d'accès (JWT) : expiration automatique après 24 heures</li>
-      <li>Jeton de rafraîchissement : expiration automatique après 7 jours</li>
+      <li>Tokens d'authentification (expiration automatique après 24h)</li>
     </ul>
 
     <h2>4. Finalités du traitement</h2>
@@ -164,50 +163,9 @@
       <li><span class="tag">Intérêt légitime</span> Sécurité du compte, prévention des abus</li>
     </ul>
 
-    <h2>6. Hébergement et sous-traitants</h2>
-    <p>Le serveur et la base de données de Moudie sont hébergés en <strong style="color:#fff">France</strong> par <strong style="color:#fff">Scalingo SAS</strong> (région <em>osc-fr1</em>).</p>
-    <p>Pour fonctionner, Moudie fait appel aux sous-traitants suivants, qui traitent certaines de vos données pour notre compte :</p>
-    <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:14px">
-      <thead>
-        <tr style="text-align:left;border-bottom:1px solid rgba(255,255,255,.2)">
-          <th style="padding:8px 6px;color:#fff">Sous-traitant</th>
-          <th style="padding:8px 6px;color:#fff">Données traitées</th>
-          <th style="padding:8px 6px;color:#fff">Localisation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-bottom:1px solid rgba(255,255,255,.08)">
-          <td style="padding:8px 6px"><strong style="color:#fff">Scalingo SAS</strong><br /><span style="font-size:12px">Hébergement applicatif</span></td>
-          <td style="padding:8px 6px">Compte, moods, contacts, base de données</td>
-          <td style="padding:8px 6px">France 🇫🇷</td>
-        </tr>
-        <tr style="border-bottom:1px solid rgba(255,255,255,.08)">
-          <td style="padding:8px 6px"><strong style="color:#fff">Cloudflare, Inc.</strong><br /><span style="font-size:12px">Stockage de fichiers (R2)</span></td>
-          <td style="padding:8px 6px">Photos de profil, selfies, messages vocaux</td>
-          <td style="padding:8px 6px">Europe de l'Ouest 🇪🇺</td>
-        </tr>
-        <tr style="border-bottom:1px solid rgba(255,255,255,.08)">
-          <td style="padding:8px 6px"><strong style="color:#fff">Brevo (Sendinblue SAS)</strong><br /><span style="font-size:12px">Envoi d'e-mails</span></td>
-          <td style="padding:8px 6px">Adresse e-mail, codes de vérification</td>
-          <td style="padding:8px 6px">France / Union européenne 🇪🇺</td>
-        </tr>
-        <tr style="border-bottom:1px solid rgba(255,255,255,.08)">
-          <td style="padding:8px 6px"><strong style="color:#fff">Expo (650 Industries, Inc.)</strong><br /><span style="font-size:12px">Service d'envoi des notifications push</span></td>
-          <td style="padding:8px 6px">Jeton de notification de l'appareil, contenu des notifications</td>
-          <td style="padding:8px 6px">États-Unis 🇺🇸</td>
-        </tr>
-        <tr>
-          <td style="padding:8px 6px"><strong style="color:#fff">Google LLC</strong> (FCM) et <strong style="color:#fff">Apple Inc.</strong> (APNs)<br /><span style="font-size:12px">Acheminement des notifications vers votre téléphone</span></td>
-          <td style="padding:8px 6px">Jeton de notification de l'appareil, contenu des notifications</td>
-          <td style="padding:8px 6px">États-Unis 🇺🇸</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>6 bis. Transferts hors Union européenne</h2>
-    <p>L'envoi des notifications push transite par les serveurs d'<strong style="color:#fff">Expo</strong>, puis par les services de notification de <strong style="color:#fff">Google</strong> (Android) ou d'<strong style="color:#fff">Apple</strong> (iOS), situés aux <strong style="color:#fff">États-Unis</strong>. Ce transfert est encadré par les clauses contractuelles types de la Commission européenne. Vous pouvez le refuser à tout moment en désactivant les notifications dans les réglages de l'application ou de votre téléphone.</p>
-    <p><strong style="color:#fff">Cloudflare, Inc.</strong> est une société de droit américain : bien que vos fichiers soient stockés en Europe de l'Ouest, cette société pourrait, dans certains cas prévus par le droit américain, être tenue d'y donner accès.</p>
-    <p>En savoir plus : <a href="https://scalingo.com/fr/politique-de-confidentialite" target="_blank">Scalingo</a> · <a href="https://www.cloudflare.com/privacypolicy/" target="_blank">Cloudflare</a> · <a href="https://www.brevo.com/legal/privacypolicy/" target="_blank">Brevo</a> · <a href="https://expo.dev/privacy" target="_blank">Expo</a></p>
+    <h2>6. Hébergement et transferts de données</h2>
+    <p>Toutes vos données sont hébergées en <strong style="color:#fff">France</strong> par <strong style="color:#fff">Scalingo SAS</strong>, hébergeur certifié HDS, dont les serveurs sont situés dans la région <em>osc-fr1</em> (France). Vos données ne quittent pas le territoire européen.</p>
+    <p>En savoir plus : <a href="https://scalingo.com/fr/politique-de-confidentialite" target="_blank">Politique de confidentialité de Scalingo</a></p>
 
     <h2>7. Durées de conservation</h2>
     <ul>
@@ -216,9 +174,7 @@
       <li>Photos de moods (selfies) : supprimées automatiquement après <strong style="color:#fff">60 jours</strong></li>
       <li>Réactions (texte et messages vocaux) : supprimées automatiquement après <strong style="color:#fff">60 jours</strong></li>
       <li>Données de localisation : supprimées automatiquement après <strong style="color:#fff">24 heures</strong></li>
-      <li>Jeton d'accès (JWT) : expiration automatique après <strong style="color:#fff">24 heures</strong></li>
-      <li>Jeton de rafraîchissement : expiration automatique après <strong style="color:#fff">7 jours</strong></li>
-      <li>Codes de vérification et de réinitialisation de mot de passe : expiration après <strong style="color:#fff">15 minutes</strong></li>
+      <li>Tokens d'authentification : expiration automatique après <strong style="color:#fff">7 jours</strong></li>
       <li>Tokens expirés : purgés automatiquement chaque nuit</li>
       <li>Compte inactif : les données peuvent être supprimées après <strong style="color:#fff">24 mois</strong> d'inactivité</li>
     </ul>
@@ -233,7 +189,7 @@
       <li><strong style="color:#fff">Droit d'opposition</strong> : vous opposer à certains traitements</li>
       <li><strong style="color:#fff">Droit de retrait du consentement</strong> : retirer votre consentement à tout moment depuis les paramètres de l'application</li>
     </ul>
-    <p>Pour exercer vos droits, contactez-nous à : <a href="mailto:moudie-ceo@proton.me">moudie-ceo@proton.me</a></p>
+    <p>Pour exercer vos droits, contactez-nous à : <a href="mailto:contact@moudie.app">contact@moudie.app</a></p>
     <p>Vous pouvez également adresser une réclamation à la <strong style="color:#fff">CNIL</strong> : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
 
     <h2>9. Sécurité des données</h2>
@@ -259,12 +215,12 @@
     <div class="card">
       <p><strong style="color:#fff">Grégory Delaroche-Vernet</strong></p>
       <p>Responsable du traitement — Application Moudie</p>
-      <p>Email : <a href="mailto:moudie-ceo@proton.me">moudie-ceo@proton.me</a></p>
+      <p>Email : <a href="mailto:contact@moudie.app">contact@moudie.app</a></p>
     </div>
 
     <footer>
       <p>© 2026 Moudie — Grégory Delaroche-Vernet. Tous droits réservés.</p>
-      <p style="margin-top:8px">Serveur : Scalingo SAS, France 🇫🇷 — Fichiers : Cloudflare R2, Europe de l'Ouest 🇪🇺</p>
+      <p style="margin-top:8px">Hébergement : Scalingo SAS, France 🇫🇷</p>
     </footer>
 
   </div>
