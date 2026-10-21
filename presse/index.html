@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Espace presse — Moudie</title>
+<meta name="description" content="Kit presse de Moudie : dossier de presse, communiqués, logos, illustrations et portrait du fondateur.">
+<link rel="icon" href="assets/moudie-logo-rond-256.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --nuit:#16152B; --nuit2:#211F3D; --violet:#7B4FD6; --rose:#EC4899; --orange:#F5A25D; --bleu:#4A7BD0; --encre:#24223A; --gris:#6B6880; --pale:#F6F3FC; --ligne:#E6E0F4; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { font-family:Poppins, "Segoe UI", system-ui, -apple-system, sans-serif; color:var(--encre); background:#fff; line-height:1.6; font-size:16px; }
+img { max-width:100%; display:block; }
+a { color:inherit; }
+.wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
+.grad { background:linear-gradient(120deg,var(--bleu),var(--violet) 35%,var(--rose) 70%,var(--orange)); }
+
+header.hero { background:var(--nuit); color:#fff; position:relative; overflow:hidden; }
+header.hero::before { content:""; position:absolute; width:620px; height:620px; border-radius:50%; right:-200px; top:-220px; background:linear-gradient(120deg,var(--bleu),var(--violet),var(--rose),var(--orange)); opacity:.22; filter:blur(60px); }
+.nav { display:flex; justify-content:space-between; align-items:center; padding:22px 0; position:relative; }
+.nav img { width:120px; }
+.nav a { font-size:14px; color:#D9D3F5; text-decoration:none; }
+.hero-inner { position:relative; padding:56px 0 88px; display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center; }
+.hero h1 { font-size:clamp(34px,5.4vw,58px); line-height:1.05; letter-spacing:-1.5px; font-weight:700; }
+.hero p { color:#D9D3F5; font-size:18px; font-weight:300; margin:22px 0 32px; max-width:520px; }
+.btn { display:inline-flex; align-items:center; gap:10px; padding:14px 22px; border-radius:999px; font-weight:600; font-size:15px; text-decoration:none; color:#fff; }
+.btn.secondaire { background:transparent; border:1.5px solid #5B5785; color:#fff; margin-left:8px; }
+.stickers { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+.stickers img:nth-child(2) { transform:translateY(-18px); }
+.stickers img:nth-child(5) { transform:translateY(-18px); }
+
+section { padding:84px 0; }
+section + section { border-top:1px solid var(--ligne); }
+h2 { font-size:clamp(26px,3.4vw,36px); line-height:1.15; letter-spacing:-.6px; color:var(--nuit); margin-bottom:12px; }
+.intro { color:var(--gris); max-width:640px; margin-bottom:36px; }
+.bar { width:56px; height:6px; border-radius:6px; margin-bottom:22px; }
+
+.bref { display:grid; grid-template-columns:1.1fr .9fr; gap:48px; }
+.bref p { margin-bottom:14px; }
+.bref p.lead { font-size:19px; color:var(--nuit); font-weight:500; margin-bottom:18px; }
+.faits { display:grid; grid-template-columns:1fr 1fr; gap:14px; align-content:start; }
+.fait { background:var(--pale); border-radius:18px; padding:20px; }
+.fait b { display:block; font-size:34px; line-height:1; color:var(--violet); margin-bottom:8px; }
+.fait span { font-size:14px; line-height:1.4; display:block; }
+
+.docs { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
+.doc { border:1.5px solid var(--ligne); border-radius:16px; padding:20px 22px; display:flex; flex-direction:column; gap:6px; }
+.doc.principal { background:var(--nuit); color:#fff; border-color:var(--nuit); }
+.doc h3 { font-size:17px; }
+.doc p { font-size:14px; color:var(--gris); flex:1; }
+.doc.principal p { color:#C9C3E8; }
+.liens { display:flex; gap:14px; margin-top:8px; font-size:14px; font-weight:600; }
+.liens a { color:var(--violet); text-decoration:none; }
+.doc.principal .liens a { color:var(--orange); }
+.liens a:hover { text-decoration:underline; }
+
+.ecrans { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }
+.ecrans a { text-decoration:none; color:var(--nuit); font-size:14px; }
+.ecrans img { border-radius:20px; box-shadow:0 10px 24px rgba(22,21,43,.18); margin-bottom:12px; }
+.ecrans b { display:block; }
+.ecrans span { color:var(--gris); font-size:13px; line-height:1.4; display:block; }
+.logos { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.logo-carte { border-radius:18px; overflow:hidden; border:1.5px solid var(--ligne); }
+.logo-carte .apercu { aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; padding:28px; }
+.logo-carte .apercu img { max-height:100%; width:auto; }
+.logo-carte .legende { padding:14px 18px; display:flex; justify-content:space-between; align-items:center; font-size:14px; }
+.logo-carte .legende a { color:var(--violet); font-weight:600; text-decoration:none; }
+.sombre { background:var(--nuit); } .clair { background:var(--pale); }
+
+.moods { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
+.mood { background:var(--pale); border-radius:18px; padding:16px 12px 14px; text-align:center; text-decoration:none; color:var(--nuit); font-weight:500; font-size:14px; }
+.mood img { width:110px; margin:0 auto 6px; }
+.mood small { display:block; color:var(--violet); font-weight:600; font-size:12px; margin-top:2px; }
+
+.fondateur { display:grid; grid-template-columns:340px 1fr; gap:48px; align-items:start; }
+.fondateur img { border-radius:22px; aspect-ratio:4/5; object-fit:cover; object-position:50% 22%; width:100%; }
+.fondateur .lead { font-size:19px; color:var(--nuit); font-weight:500; margin-bottom:14px; }
+.fondateur p { margin-bottom:14px; }
+.tetris { background:var(--nuit); color:#fff; border-radius:16px; padding:16px 20px; font-size:15px; margin:20px 0; }
+.tetris b { color:var(--orange); }
+blockquote { border-left:5px solid var(--rose); padding:2px 0 2px 20px; font-style:italic; font-size:18px; color:var(--nuit); margin:22px 0; }
+
+footer { background:var(--nuit); color:#fff; padding:72px 0; }
+footer h2 { color:#fff; }
+footer .cols { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:28px; }
+footer .cols b { color:var(--orange); font-weight:500; display:block; margin-bottom:6px; }
+footer .cols p, footer .cols a { color:#D9D3F5; font-size:15px; text-decoration:none; }
+footer .cols a:hover { text-decoration:underline; }
+.mentions { margin-top:56px; font-size:13px; color:#8C86AE; }
+
+@media (max-width:820px) {
+  .hero-inner, .bref, .fondateur { grid-template-columns:1fr; }
+  .hero-inner { padding:24px 0 64px; }
+  .stickers { max-width:380px; }
+  .logos, footer .cols { grid-template-columns:1fr; }
+  .ecrans { grid-template-columns:repeat(2,1fr); }
+  .fondateur img { max-width:340px; }
+  .btn.secondaire { margin:12px 0 0; }
+  section { padding:60px 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav">
+      <a href="/"><img src="assets/moudie-logo-texte-blanc.png" alt="Moudie"></a>
+      <a href="mailto:contact@moudie.app">contact@moudie.app</a>
+    </nav>
+    <div class="hero-inner">
+      <div>
+        <h1>Partager son humeur, pas sa vitrine.</h1>
+        <p>Bienvenue dans l'espace presse de Moudie, le réseau social français qui ne vous demande pas d'être parfait. Tout ce qu'il faut pour écrire sur nous est ici, en libre téléchargement.</p>
+        <a class="btn grad" href="assets/kit-presse-moudie.zip" download>Télécharger le kit complet (ZIP)</a>
+        <a class="btn secondaire" href="assets/moudie-dossier-de-presse.pdf" target="_blank">Dossier de presse (PDF)</a>
+      </div>
+      <div class="stickers" aria-hidden="true">
+        <img src="assets/mood-apero.png" alt=""><img src="assets/mood-winner.png" alt=""><img src="assets/mood-batteriefaible.png" alt="">
+        <img src="assets/mood-superlover.png" alt=""><img src="assets/mood-flemme.png" alt=""><img src="assets/mood-pyjama.png" alt="">
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="bref">
+  <div class="wrap bref">
+    <div>
+      <div class="bar grad"></div>
+      <h2>Moudie en bref</h2>
+      <p class="lead">Une application mobile pour partager son humeur du jour avec ses proches, puis se retrouver en vrai.</p>
+      <p>Pas de likes à collectionner, pas d'inconnus, pas de mise en scène : on choisit une humeur, on ajoute un selfie si on en a envie, et on la partage avec un cercle de 50 personnes au maximum. Avec la fonction « Se retrouver », un proche qui passe dans le coin peut nous rejoindre grâce à l'itinéraire.</p>
+      <p>Conçue et développée en France par Grégory Delaroche-Vernet, père de quatre enfants, Moudie est disponible gratuitement sur l'App Store et Google Play.</p>
+    </div>
+    <div class="faits">
+      <div class="fait"><b>32+1</b><span>humeurs illustrées, dont une à inventer soi-même</span></div>
+      <div class="fait"><b>50</b><span>proches au maximum dans son cercle</span></div>
+      <div class="fait"><b>15 ans</b><span>âge minimum pour s'inscrire</span></div>
+      <div class="fait"><b>France</b><span>serveurs et base de données hébergés en France</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="ecrans">
+  <div class="wrap">
+    <div class="bar grad"></div>
+    <h2>L'application en images</h2>
+    <p class="intro">Captures d'écran de l'application iOS, en haute définition. Cliquez sur une capture pour la télécharger.</p>
+    <div class="ecrans">
+      <a href="assets/moudie-ecran-1-accueil.jpg" download><img src="assets/moudie-ecran-1-accueil.jpg" alt="Écran d'accueil de Moudie" loading="lazy"><b>L'accueil</b><span>Les humeurs de ses proches et leur intensité.</span></a>
+      <a href="assets/moudie-ecran-3-partage-mood.jpg" download><img src="assets/moudie-ecran-3-partage-mood.jpg" alt="Choix de l'humeur" loading="lazy"><b>Partager son mood</b><span>32 humeurs, une personnalisée, des moods éphémères.</span></a>
+      <a href="assets/moudie-ecran-4-se-retrouver.jpg" download><img src="assets/moudie-ecran-4-se-retrouver.jpg" alt="Fonction Se retrouver" loading="lazy"><b>Se retrouver</b><span>Un point de rendez-vous et le trajet de chacun.</span></a>
+      <a href="assets/moudie-ecran-5-mood-du-monde.jpg" download><img src="assets/moudie-ecran-5-mood-du-monde.jpg" alt="Carte du mood du monde" loading="lazy"><b>Le mood du monde</b><span>Les humeurs partagées dans les dernières 24 heures.</span></a>
+      <a href="assets/moudie-ecran-2-connexion.jpg" download><img src="assets/moudie-ecran-2-connexion.jpg" alt="Écran de connexion" loading="lazy"><b>Bienvenue</b><span>Le 1er réseau social non performatif limité à 50 contacts.</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="documents">
+  <div class="wrap">
+    <div class="bar grad"></div>
+    <h2>Dossier et communiqués</h2>
+    <p class="intro">Le communiqué de lancement existe en plusieurs versions, chacune pensée pour un type de média. Chaque document est disponible en PDF et en Word.</p>
+    <div class="docs">
+      <div class="doc principal"><h3>Dossier de presse</h3><p>Présentation complète, fonctionnalités, engagements, portrait du fondateur et questions fréquentes.</p><div class="liens"><a href="assets/moudie-dossier-de-presse.pdf" target="_blank">PDF</a></div></div>
+      <div class="doc"><h3>Communiqué de lancement</h3><p>La version générale, toutes thématiques confondues.</p><div class="liens"><a href="assets/communiques/0_Moudie_Communique_general.pdf" target="_blank">PDF</a><a href="assets/communiques/0_Moudie_Communique_general.docx" download>Word</a></div></div>
+      <div class="doc"><h3>Version tech</h3><p>Fonctionnalités, choix techniques, OpenStreetMap et filtres en réalité augmentée.</p><div class="liens"><a href="assets/communiques/1_Moudie_Communique_Tech.pdf" target="_blank">PDF</a><a href="assets/communiques/1_Moudie_Communique_Tech.docx" download>Word</a></div></div>
+      <div class="doc"><h3>Version entrepreneuriat</h3><p>Un fondateur seul face aux géants des réseaux sociaux.</p><div class="liens"><a href="assets/communiques/2_Moudie_Communique_Startup.pdf" target="_blank">PDF</a><a href="assets/communiques/2_Moudie_Communique_Startup.docx" download>Word</a></div></div>
+      <div class="doc"><h3>Version souveraineté numérique</h3><p>Hébergement en France, sobriété et respect des données.</p><div class="liens"><a href="assets/communiques/3_Moudie_Communique_Souverainete.pdf" target="_blank">PDF</a><a href="assets/communiques/3_Moudie_Communique_Souverainete.docx" download>Word</a></div></div>
+      <div class="doc"><h3>Version société et lifestyle</h3><p>La fin de la mise en scène de soi, et le droit d'être crevé.</p><div class="liens"><a href="assets/communiques/4_Moudie_Communique_Societe_Lifestyle.pdf" target="_blank">PDF</a><a href="assets/communiques/4_Moudie_Communique_Societe_Lifestyle.docx" download>Word</a></div></div>
+      <div class="doc"><h3>Radio et podcasts</h3><p>Proposition d'invité et sujets d'interview.</p><div class="liens"><a href="assets/communiques/5_Moudie_Proposition_Invite_Radio_Podcast.pdf" target="_blank">PDF</a><a href="assets/communiques/5_Moudie_Proposition_Invite_Radio_Podcast.docx" download>Word</a></div></div>
+      <div class="doc"><h3>Presse régionale</h3><p>Le parcours d'un entrepreneur des Yvelines.</p><div class="liens"><a href="assets/communiques/6_Moudie_Communique_Presse_Regionale.pdf" target="_blank">PDF</a><a href="assets/communiques/6_Moudie_Communique_Presse_Regionale.docx" download>Word</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="logos">
+  <div class="wrap">
+    <div class="bar grad"></div>
+    <h2>Logos</h2>
+    <p class="intro">Le logo avec le nom en blanc s'utilise sur fond sombre ou coloré. Merci de ne pas déformer ni recolorer le logo.</p>
+    <div class="logos">
+      <div class="logo-carte"><div class="apercu sombre"><img src="assets/moudie-logo-texte-blanc.png" alt="Logo Moudie avec le nom"></div><div class="legende"><span>Logo + nom, fond transparent</span><a href="assets/moudie-logo-texte-blanc.png" download>PNG</a></div></div>
+      <div class="logo-carte"><div class="apercu sombre"><img src="assets/moudie-logo-fond-sombre-1024.png" alt="Icône Moudie sur fond sombre"></div><div class="legende"><span>Icône d'app, 1024 px</span><a href="assets/moudie-logo-fond-sombre-1024.png" download>PNG</a></div></div>
+      <div class="logo-carte"><div class="apercu clair"><img src="assets/moudie-logo-rond-256.png" alt="Icône ronde Moudie"></div><div class="legende"><span>Icône ronde, fond transparent</span><a href="assets/moudie-logo-rond-256.png" download>PNG</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="humeurs">
+  <div class="wrap">
+    <div class="bar grad"></div>
+    <h2>Les humeurs de Moudie</h2>
+    <p class="intro">Une sélection parmi les 32 humeurs de l'application. Cliquez sur une illustration pour la télécharger.</p>
+    <div class="moods">
+      <a class="mood" href="assets/mood-apero.png" download><img src="assets/mood-apero.png" alt="">Apéro<small>PNG</small></a>
+      <a class="mood" href="assets/mood-batteriefaible.png" download><img src="assets/mood-batteriefaible.png" alt="">Batterie faible<small>PNG</small></a>
+      <a class="mood" href="assets/mood-flemme.png" download><img src="assets/mood-flemme.png" alt="">Flemme<small>PNG</small></a>
+      <a class="mood" href="assets/mood-winner.png" download><img src="assets/mood-winner.png" alt="">Win<small>PNG</small></a>
+      <a class="mood" href="assets/mood-superlover.png" download><img src="assets/mood-superlover.png" alt="">Superlover<small>PNG</small></a>
+      <a class="mood" href="assets/mood-rage.png" download><img src="assets/mood-rage.png" alt="">Rage<small>PNG</small></a>
+      <a class="mood" href="assets/mood-pyjama.png" download><img src="assets/mood-pyjama.png" alt="">Pyjama<small>PNG</small></a>
+      <a class="mood" href="assets/mood-scrolling.png" download><img src="assets/mood-scrolling.png" alt="">Scrolling<small>PNG</small></a>
+      <a class="mood" href="assets/mood-alone.png" download><img src="assets/mood-alone.png" alt="">Alone<small>PNG</small></a>
+    </div>
+  </div>
+</section>
+
+<section id="fondateur">
+  <div class="wrap fondateur">
+    <div>
+      <img src="assets/gregory-delaroche-vernet-portrait.jpg" alt="Portrait de Grégory Delaroche-Vernet">
+      <div class="liens"><a href="assets/gregory-delaroche-vernet-portrait.jpg" download>Télécharger le portrait HD</a></div>
+    </div>
+    <div>
+      <div class="bar grad"></div>
+      <h2>Le fondateur</h2>
+      <p class="lead">Grégory Delaroche-Vernet vit au Chesnay, dans les Yvelines. Il est marié et père de quatre enfants.</p>
+      <p>Diplômé d'école de commerce, il a fait carrière dans le marketing B2B, puis dans le marketing et l'informatique, qu'il a appris en autodidacte, avant de devenir directeur général. Il exerce aujourd'hui cette fonction dans le secteur de la santé à domicile.</p>
+      <p>Toujours « le geek de la bande », il est venu au développement d'applications avec l'intelligence artificielle, par curiosité. Il a conçu, codé et publié Moudie seul, en réaction au « brain rot » provoqué par les géants des réseaux sociaux, et avec une conviction : l'être humain est plus profond que l'image qu'il donne de lui.</p>
+      <div class="tetris"><b>Le détail qui surprend :</b> il est régulièrement classé n°1 français à Tetris, et figure dans le top 50 mondial.</div>
+      <blockquote>« Mes enfants sont ados, et je me suis demandé quel réseau social j'aurais envie de voir sur leur téléphone. Je ne l'ai pas trouvé, alors je l'ai créé. »</blockquote>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>Contact presse</h2>
+    <p style="color:#D9D3F5;max-width:600px">Grégory Delaroche-Vernet est disponible pour des interviews en studio, par téléphone ou en visio.</p>
+    <div class="cols">
+      <div><b>Écrire</b><a href="mailto:contact@moudie.app">contact@moudie.app</a></div>
+      <div><b>Appeler</b><a href="tel:+33665339941">06 65 33 99 41</a></div>
+      <div><b>Essayer l'application</b><a href="https://apps.apple.com/fr/app/moudie/id6809138377" target="_blank" rel="noopener">Moudie sur l'App Store</a><br><a href="https://play.google.com/store/apps/details?id=com.gregorydelaroche.moody" target="_blank" rel="noopener">Moudie sur Google Play</a></div>
+    </div>
+    <p class="mentions">Les visuels de cette page peuvent être utilisés librement dans le cadre d'articles et de reportages consacrés à Moudie. © 2026 Moudie</p>
+  </div>
+</footer>
+</body>
+</html>
