@@ -1,0 +1,31 @@
+# Moudie
+
+> Moudie est un réseau social mobile français, gratuit et sans publicité, pour partager son humeur du jour avec un cercle de 50 proches au maximum. Pas de likes, pas d'inconnus, pas de fil infini. Disponible sur iPhone (App Store) et Android (Google Play), à partir de 15 ans.
+
+Moudie est conçu comme l'inverse des grands réseaux sociaux : on n'y publie pas une image de soi, on dit simplement comment on va. Chaque utilisateur choisit parmi 32 humeurs illustrées (ou en invente une), avec une intensité de 1 à 5 et un selfie facultatif, et la partage à son cercle proche. Ses proches peuvent réagir par un commentaire, un message vocal, un appel, ou proposer de se retrouver en vrai grâce à un point de rendez-vous avec le trajet et l'heure d'arrivée de chacun.
+
+Points clés :
+- Cercle limité à 50 proches, sans comptes publics ni influenceurs
+- Selfie facultatif, aucune série de jours à tenir
+- Géolocalisation uniquement au choix, à chaque partage, jamais en arrière-plan
+- À partir de 15 ans ; blocage et signalement en un geste
+- Serveurs et base de données hébergés en France, cartographie OpenStreetMap
+- Gratuit, sans publicité ; données ni revendues ni exploitées à des fins publicitaires
+- Créé par Grégory Delaroche-Vernet, qui l'a conçu et développé seul avec l'aide de l'IA ; édité par une entreprise individuelle française
+
+## Pages
+
+- [Accueil](https://moudie.app/) : présentation de Moudie et questions fréquentes
+- [Presse](https://moudie.app/presse/) : dossier de presse, communiqués, visuels et contact presse
+- [Sécurité des enfants](https://moudie.app/securite-enfants.html) : règles et engagements de protection des mineurs
+- [Politique de confidentialité](https://moudie.app/privacy.html)
+- [Conditions d'utilisation](https://moudie.app/cgu.html)
+
+## Télécharger
+
+- [App Store (iPhone)](https://apps.apple.com/fr/app/moudie/id6809138377)
+- [Google Play (Android)](https://play.google.com/store/apps/details?id=com.gregorydelaroche.moody)
+
+## Contact
+
+- contact@moudie.app

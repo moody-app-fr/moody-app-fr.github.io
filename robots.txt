@@ -1,0 +1,5 @@
+# moudie.app — tout le site est public, moteurs de recherche et assistants IA compris
+User-agent: *
+Allow: /
+
+Sitemap: https://moudie.app/sitemap.xml
