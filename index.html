@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Moudie — Le réseau social limité à ton cercle proche</title>
-  <meta name="description" content="Moudie, le réseau social limité à ton cercle proche. Partage ton humeur du jour avec ceux qui comptent, réagis à celles de tes amis." />
+  <meta name="description" content="Moudie, le réseau social français limité à ton cercle proche : partage ton humeur du jour avec 50 proches au maximum. Sans likes, sans inconnus, sans pub. Gratuit sur iPhone et Android." />
 
   <!-- Open Graph (aperçu lors du partage de lien) -->
   <meta property="og:title" content="Moudie — Le réseau social limité à ton cercle proche" />
@@ -12,6 +12,81 @@
   <meta property="og:image" content="https://moudie.app/logo_moudie.png" />
   <meta property="og:url" content="https://moudie.app" />
   <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://moudie.app/" />
+  <meta name="apple-itunes-app" content="app-id=6809138377" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Moudie" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Moudie — Le réseau social limité à ton cercle proche" />
+  <meta name="twitter:description" content="Partage ton humeur avec ceux qui comptent. Pas de likes, pas d'inconnus, 50 proches au maximum." />
+  <meta name="twitter:image" content="https://moudie.app/logo_moudie.png" />
+
+  <!-- Données structurées : aident Google, Bing et les assistants IA à comprendre ce qu'est Moudie -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://moudie.app/#organization",
+        "name": "Moudie",
+        "url": "https://moudie.app/",
+        "logo": "https://moudie.app/presse/assets/moudie-logo-rond-256.png",
+        "email": "contact@moudie.app",
+        "founder": { "@type": "Person", "name": "Grégory Delaroche-Vernet" },
+        "sameAs": [
+          "https://apps.apple.com/fr/app/moudie/id6809138377",
+          "https://play.google.com/store/apps/details?id=com.gregorydelaroche.moody"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://moudie.app/#website",
+        "url": "https://moudie.app/",
+        "name": "Moudie",
+        "inLanguage": "fr-FR",
+        "publisher": { "@id": "https://moudie.app/#organization" }
+      },
+      {
+        "@type": "MobileApplication",
+        "@id": "https://moudie.app/#app",
+        "name": "Moudie",
+        "description": "Réseau social français pour partager son humeur du jour avec un cercle de 50 proches au maximum. Pas de likes, pas d'inconnus, pas de fil infini. Selfie facultatif, rendez-vous pour se retrouver en vrai, données hébergées en France.",
+        "applicationCategory": "SocialNetworkingApplication",
+        "operatingSystem": "iOS, Android",
+        "inLanguage": "fr-FR",
+        "url": "https://moudie.app/",
+        "installUrl": [
+          "https://apps.apple.com/fr/app/moudie/id6809138377",
+          "https://play.google.com/store/apps/details?id=com.gregorydelaroche.moody"
+        ],
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "author": { "@type": "Person", "name": "Grégory Delaroche-Vernet" },
+        "publisher": { "@id": "https://moudie.app/#organization" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://moudie.app/#faq",
+        "mainEntity": [
+          { "@type": "Question", "name": "Qu'est-ce que Moudie ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Moudie est un réseau social français pour partager son humeur du jour avec ses proches, dans un cercle limité à 50 personnes. Pas de likes, pas d'inconnus, pas de fil infini : on dit simplement comment on va, et on voit comment vont les siens." } },
+          { "@type": "Question", "name": "Moudie, c'est un nouveau BeReal ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Non. Moudie ne demande pas de prouver ce qu'on fait, mais de dire comment on va. Le partage se fait à un cercle limité à 50 proches, la photo est facultative, et la fonction « Se retrouver » pousse à se voir en vrai." } },
+          { "@type": "Question", "name": "Moudie est-il gratuit ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Oui. Moudie est gratuit sur l'App Store et sur Google Play, sans publicité, et les données des utilisateurs ne sont ni revendues ni exploitées à des fins publicitaires." } },
+          { "@type": "Question", "name": "À partir de quel âge peut-on utiliser Moudie ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Moudie est réservé aux personnes de 15 ans et plus. L'application intègre le blocage et le signalement en un geste, et applique une tolérance zéro face aux contenus abusifs." } },
+          { "@type": "Question", "name": "Où sont stockées les données ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Les serveurs applicatifs et la base de données de Moudie sont hébergés en France, et la cartographie utilise OpenStreetMap. Les sous-traitants techniques sont listés dans la politique de confidentialité." } },
+          { "@type": "Question", "name": "Moudie partage-t-il ma position ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Seulement si on le choisit, à chaque partage. La géolocalisation n'est jamais activée en arrière-plan." } },
+          { "@type": "Question", "name": "Qui a créé Moudie ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Grégory Delaroche-Vernet, père de quatre enfants, qui a conçu et développé seul l'application avec l'aide de l'intelligence artificielle. Moudie est édité par son entreprise individuelle française." } }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -136,6 +211,107 @@
       .tagline { font-size: 19px; }
       .logo-icon { width: 112px; height: 112px; }
     }
+
+    /* ===== CONTENU ===== */
+    header { min-height: 92vh; min-height: 92svh; }
+    h1.tagline { line-height: 1.5; }
+    main { position: relative; z-index: 1; }
+    .section { padding: 72px 20px; }
+    .section + .section { border-top: 1px solid #241a33; }
+    .section h2 {
+      font-size: 30px;
+      line-height: 1.25;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.4px;
+      margin-bottom: 20px;
+    }
+    .section p { font-size: 17px; margin-bottom: 14px; max-width: 60ch; }
+    .section p strong { color: #E8E0F5; font-weight: 600; }
+
+    /* Les humeurs : l'élément visuel de la page */
+    .moods {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin: 36px auto 8px;
+      max-width: 760px;
+      padding: 0 20px;
+      list-style: none;
+      position: relative;
+      z-index: 1;
+    }
+    .moods li { text-align: center; }
+    .moods img { width: 100%; max-width: 104px; height: auto; display: block; margin: 0 auto 6px; }
+    .moods span { font-size: 13px; color: #A895C0; }
+    .moods li:nth-child(odd) img { transform: rotate(-4deg); }
+    .moods li:nth-child(even) img { transform: rotate(3deg) translateY(6px); }
+    .section .moods-note { text-align: center; font-size: 14px; color: #8B7AA0; position: relative; z-index: 1; max-width: none; margin: 0 auto; padding: 0 20px; }
+
+    /* Étapes : un vrai parcours, donc numéroté */
+    .steps { list-style: none; counter-reset: step; margin-top: 8px; }
+    .steps li {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 4px 16px;
+      padding: 16px 0;
+    }
+    .steps li::before {
+      content: counter(step);
+      grid-row: span 2;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-weight: 700; font-size: 16px; color: #fff;
+      background: linear-gradient(135deg, #8B5CF6, #EC4899 60%, #F97316);
+    }
+    .steps b { color: #fff; font-size: 17px; font-weight: 600; }
+    .steps span { font-size: 16px; }
+
+    /* Ce qui change */
+    .points { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 32px; margin-top: 8px; }
+    .points dt { color: #fff; font-weight: 600; font-size: 17px; margin-bottom: 4px; }
+    .points dd { font-size: 16px; }
+
+    /* FAQ */
+    .faq details { border-bottom: 1px solid #2D2438; }
+    .faq summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 18px 32px 18px 0;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 600;
+      position: relative;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+";
+      position: absolute; right: 4px; top: 14px;
+      font-size: 24px; font-weight: 400; color: #A78BFA;
+      transition: transform 0.2s ease;
+    }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq details p { font-size: 16px; padding-bottom: 18px; margin: 0; }
+    .faq a, .section a.inline { color: #A78BFA; }
+
+    .final { text-align: center; }
+    .final h2 { margin-bottom: 28px; }
+    .final .cta-row { margin-bottom: 0; }
+
+    a:focus-visible, summary:focus-visible { outline: 2px solid #A78BFA; outline-offset: 3px; border-radius: 6px; }
+
+    @media (max-width: 600px) {
+      .section { padding: 56px 20px; }
+      .section h2 { font-size: 25px; }
+      .moods { grid-template-columns: repeat(3, 1fr); gap: 18px 10px; }
+      .points { grid-template-columns: 1fr; gap: 22px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .faq summary::after { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -145,7 +321,7 @@
   <header>
     <div class="container">
       <img src="https://moudie.app/logo_moudie.png" alt="Moudie" class="logo-icon" />
-      <p class="tagline">Le réseau social limité à ton cercle proche.</p>
+      <h1 class="tagline">Le réseau social limité à ton cercle proche.</h1>
       <p class="subtagline">Non performatif, limité à 50 contacts, souverain.</p>
 
       <div class="cta-row">
@@ -172,6 +348,95 @@
       <span class="age-badge">Recommandé à partir de 15 ans</span>
     </div>
   </header>
+
+  <main>
+    <!-- ===== PRÉSENTATION ===== -->
+    <section class="section" id="presentation">
+      <div class="container">
+        <h2>Comment ça va, vraiment&nbsp;?</h2>
+        <p>Moudie est un réseau social français pour <strong>partager son humeur du jour avec ses proches</strong>. Pas de likes à collectionner, pas d'inconnus, pas de mise en scène&nbsp;: une humeur, un selfie si on en a envie, et un cercle de 50 personnes au maximum.</p>
+        <p>Joyeux, fatigué, agacé ou franchement en mode flemme&nbsp;: toutes les humeurs sont légitimes, et aucune n'a besoin d'être parfaite. Et quand on est dans le coin, Moudie propose de se retrouver en vrai.</p>
+      </div>
+      <ul class="moods" aria-label="Quelques humeurs de Moudie">
+        <li><img src="/presse/assets/mood-apero.png" alt="Humeur Apéro" width="104" height="104" loading="lazy" /><span>Apéro</span></li>
+        <li><img src="/presse/assets/mood-batteriefaible.png" alt="Humeur Batterie faible" width="104" height="104" loading="lazy" /><span>Batterie faible</span></li>
+        <li><img src="/presse/assets/mood-flemme.png" alt="Humeur Flemme" width="104" height="104" loading="lazy" /><span>Flemme</span></li>
+        <li><img src="/presse/assets/mood-winner.png" alt="Humeur Win" width="104" height="104" loading="lazy" /><span>Win</span></li>
+        <li><img src="/presse/assets/mood-superlover.png" alt="Humeur Superlover" width="104" height="104" loading="lazy" /><span>Superlover</span></li>
+        <li><img src="/presse/assets/mood-pyjama.png" alt="Humeur Pyjama" width="104" height="104" loading="lazy" /><span>Pyjama</span></li>
+      </ul>
+      <p class="moods-note">32 humeurs illustrées, plus celle que tu inventes.</p>
+    </section>
+
+    <!-- ===== COMMENT ÇA MARCHE ===== -->
+    <section class="section" id="fonctionnement">
+      <div class="container">
+        <h2>Comment ça marche</h2>
+        <ol class="steps">
+          <li><b>Choisis ton humeur</b><span>Parmi 32 humeurs illustrées, avec une intensité de 1 à 5, ou crée la tienne.</span></li>
+          <li><b>Ajoute un selfie, si tu veux</b><span>La photo n'est jamais obligatoire.</span></li>
+          <li><b>Partage-la à ton cercle</b><span>50 proches au maximum, jamais d'inconnus.</span></li>
+          <li><b>Réagis, parle, retrouve-toi</b><span>Commentaires, messages vocaux, appels, et un point de rendez-vous pour se voir.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== CE QUI CHANGE ===== -->
+    <section class="section" id="difference">
+      <div class="container">
+        <h2>Ce qui change avec Moudie</h2>
+        <dl class="points">
+          <div><dt>Un cercle à taille humaine</dt><dd>50 proches au maximum. Pas de comptes publics, pas d'influenceurs, pas de fil infini.</dd></div>
+          <div><dt>Se retrouver en vrai</dt><dd>Un point de rendez-vous, avec le trajet et l'heure d'arrivée de chacun. Ta position, seulement si tu le choisis.</dd></div>
+          <div><dt>Sans pression</dt><dd>Aucune série de jours à tenir&nbsp;: sur Moudie, personne ne perd rien à faire une pause.</dd></div>
+          <div><dt>Bienveillant</dt><dd>Dès 15 ans, blocage et signalement en un geste, tolérance zéro face aux contenus abusifs.</dd></div>
+          <div><dt>Hébergé en France</dt><dd>Serveurs et base de données en France, cartographie libre OpenStreetMap.</dd></div>
+          <div><dt>Gratuit, sans publicité</dt><dd>Tes données ne sont ni revendues ni exploitées à des fins publicitaires.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section faq" id="questions">
+      <div class="container">
+        <h2>Questions fréquentes</h2>
+        <details><summary>Qu'est-ce que Moudie&nbsp;?</summary><p>Moudie est un réseau social français pour partager son humeur du jour avec ses proches, dans un cercle limité à 50 personnes. Pas de likes, pas d'inconnus, pas de fil infini&nbsp;: on dit simplement comment on va, et on voit comment vont les siens.</p></details>
+        <details><summary>Moudie, c'est un nouveau BeReal&nbsp;?</summary><p>Non. Moudie ne demande pas de prouver ce qu'on fait, mais de dire comment on va. Le partage se fait à un cercle limité à 50 proches, la photo est facultative, et la fonction «&nbsp;Se retrouver&nbsp;» pousse à se voir en vrai.</p></details>
+        <details><summary>Moudie est-il gratuit&nbsp;?</summary><p>Oui. Moudie est gratuit sur l'App Store et sur Google Play, sans publicité, et les données des utilisateurs ne sont ni revendues ni exploitées à des fins publicitaires.</p></details>
+        <details><summary>À partir de quel âge peut-on utiliser Moudie&nbsp;?</summary><p>Moudie est réservé aux personnes de 15 ans et plus. L'application intègre le blocage et le signalement en un geste, et applique une tolérance zéro face aux contenus abusifs. Voir aussi notre <a href="/securite-enfants.html">page sur la sécurité des enfants</a>.</p></details>
+        <details><summary>Où sont stockées les données&nbsp;?</summary><p>Les serveurs applicatifs et la base de données de Moudie sont hébergés en France, et la cartographie utilise OpenStreetMap. Les sous-traitants techniques sont listés dans la <a href="/privacy.html">politique de confidentialité</a>.</p></details>
+        <details><summary>Moudie partage-t-il ma position&nbsp;?</summary><p>Seulement si on le choisit, à chaque partage. La géolocalisation n'est jamais activée en arrière-plan.</p></details>
+        <details><summary>Qui a créé Moudie&nbsp;?</summary><p>Grégory Delaroche-Vernet, père de quatre enfants, qui a conçu et développé seul l'application avec l'aide de l'intelligence artificielle. Moudie est édité par son entreprise individuelle française. Journalistes&nbsp;: tout est sur la <a href="/presse/">page presse</a>.</p></details>
+      </div>
+    </section>
+
+    <!-- ===== TÉLÉCHARGER ===== -->
+    <section class="section final" id="telecharger">
+      <div class="container">
+        <h2>Ton cercle t'attend</h2>
+        <div class="cta-row">
+          <!-- Google Play -->
+          <a href="https://play.google.com/store/apps/details?id=com.gregorydelaroche.moody" class="btn btn-store">
+            <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M47 32c-7 4-11 12-11 22v404c0 10 4 18 11 22l236-224L47 32z" fill="#8B5CF6"/>
+              <path d="M283 256l64-61 108 62c15 9 15 30 0 39l-108 62-64-102z" fill="#EC4899"/>
+              <path d="M47 32c5-3 12-3 19 1l281 162-64 61L47 32z" fill="#A78BFA"/>
+              <path d="M283 256l64 61L66 479c-7 4-14 4-19 1l236-224z" fill="#F97316"/>
+            </svg>
+            <span class="store-txt"><small>Disponible sur</small><span>Google Play</span></span>
+          </a>
+
+          <!-- App Store -->
+          <a href="https://apps.apple.com/fr/app/moudie/id6809138377" class="btn btn-store">
+            <svg viewBox="0 0 384 512" fill="#E8E0F5" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318 268c-1-58 47-86 49-87-27-39-68-44-83-45-35-4-69 21-87 21-18 0-45-20-74-20-38 1-73 22-93 56-40 69-10 171 28 227 19 27 41 58 70 57 28-1 39-18 73-18 34 0 43 18 73 17 30-1 49-28 67-55 21-31 30-61 30-63-1-1-58-22-58-89zM261 82c15-19 26-45 23-71-22 1-49 15-65 34-14 16-27 43-24 68 25 2 50-13 66-31z"/>
+            </svg>
+            <span class="store-txt"><small>Télécharger dans l'</small><span>App Store</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- ===== FOOTER ===== -->
   <footer>
