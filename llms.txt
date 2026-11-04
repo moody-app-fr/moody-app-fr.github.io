@@ -2,7 +2,7 @@
 
 > Moudie est un réseau social mobile français, gratuit et sans publicité, pour partager son humeur du jour avec un cercle de 50 proches au maximum. Pas de likes, pas d'inconnus, pas de fil infini. Disponible sur iPhone (App Store) et Android (Google Play), à partir de 15 ans.
 
-Moudie est conçu comme l'inverse des grands réseaux sociaux : on n'y publie pas une image de soi, on dit simplement comment on va. Chaque utilisateur choisit parmi 32 humeurs illustrées (ou en invente une), avec une intensité de 1 à 5 et un selfie facultatif, et la partage à son cercle proche. Ses proches peuvent réagir par un commentaire, un message vocal, un appel, ou proposer de se retrouver en vrai grâce à un point de rendez-vous avec le trajet et l'heure d'arrivée de chacun.
+Moudie est conçu comme l'inverse des grands réseaux sociaux : on n'y publie pas une image de soi, on dit simplement comment on va. Chaque utilisateur choisit parmi 35 humeurs illustrées (ou en invente une), avec une intensité de 1 à 5 et un selfie facultatif, et la partage à son cercle proche. Ses proches peuvent réagir par un commentaire, un message vocal, un appel, en répondant par un mood, ou proposer de se retrouver en vrai grâce à un point de rendez-vous avec le trajet et l'heure d'arrivée de chacun.
 
 Points clés :
 - Cercle limité à 50 proches, sans comptes publics ni influenceurs
