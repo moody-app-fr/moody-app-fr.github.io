@@ -84,6 +84,14 @@ h2 { font-size:clamp(26px,3.4vw,36px); line-height:1.15; letter-spacing:-.6px; c
 .tetris b { color:var(--orange); }
 blockquote { border-left:5px solid var(--rose); padding:2px 0 2px 20px; font-style:italic; font-size:18px; color:var(--nuit); margin:22px 0; }
 
+.retombees { display:grid; gap:16px; }
+.retombee { display:grid; grid-template-columns:160px 1fr; gap:24px; background:var(--pale); border-radius:18px; padding:22px 26px; }
+.retombee .media { font-weight:700; color:var(--nuit); font-size:16px; }
+.retombee .media small { display:block; color:var(--gris); font-weight:400; font-size:13px; margin-top:4px; }
+.retombee h3 { font-size:17px; color:var(--nuit); margin-bottom:6px; }
+.retombee p { font-size:15px; margin-bottom:10px; }
+.retombee a { color:var(--violet); font-weight:600; text-decoration:none; }
+.retombee a:hover { text-decoration:underline; }
 footer { background:var(--nuit); color:#fff; padding:72px 0; }
 footer h2 { color:#fff; }
 footer .cols { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:28px; }
@@ -97,6 +105,7 @@ footer .cols a:hover { text-decoration:underline; }
   .hero-inner { padding:24px 0 64px; }
   .stickers { max-width:380px; }
   .logos, footer .cols { grid-template-columns:1fr; }
+  .retombee { grid-template-columns:1fr; gap:8px; }
   .ecrans { grid-template-columns:repeat(2,1fr); }
   .fondateur img { max-width:340px; }
   .btn.secondaire { margin:12px 0 0; }
@@ -143,6 +152,23 @@ footer .cols a:hover { text-decoration:underline; }
       <div class="fait"><b>50</b><span>proches au maximum dans son cercle</span></div>
       <div class="fait"><b>15 ans</b><span>âge minimum pour s'inscrire</span></div>
       <div class="fait"><b>France</b><span>serveurs et base de données hébergés en France</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="retombees">
+  <div class="wrap">
+    <div class="bar grad"></div>
+    <h2>Ils parlent de Moudie</h2>
+    <div class="retombees">
+      <div class="retombee">
+        <div class="media">Monde Numérique<small>Podcast · 7 novembre 2026</small></div>
+        <div>
+          <h3>« Moudie : créer un réseau social sans savoir programmer »</h3>
+          <p>Dans L'Hebdo de Jérôme Colombain, Grégory Delaroche-Vernet raconte comment il a conçu seul Moudie avec l'aide de l'IA, sans savoir écrire une ligne de code, et pourquoi le réseau est limité à 50 proches.</p>
+          <a href="https://mondenumerique.info/podcast/monde-numerique/episode/le-bluenami-va-t-il-freiner-lintelligence-artificielle-lhebdo-071126" target="_blank" rel="noopener">Écouter l'épisode (à partir de 44 min 56 s)</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
