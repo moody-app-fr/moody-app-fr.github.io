@@ -21,6 +21,10 @@ Points clés :
 - [Politique de confidentialité](https://moudie.app/privacy.html)
 - [Conditions d'utilisation](https://moudie.app/cgu.html)
 
+## Dans les médias
+
+- [Monde Numérique, L'Hebdo du 7 novembre 2026](https://mondenumerique.info/podcast/monde-numerique/episode/le-bluenami-va-t-il-freiner-lintelligence-artificielle-lhebdo-071126) : interview de Grégory Delaroche-Vernet, « Moudie : créer un réseau social sans savoir programmer » (à partir de 44 min 56 s)
+
 ## Télécharger
 
 - [App Store (iPhone)](https://apps.apple.com/fr/app/moudie/id6809138377)
